@@ -24,34 +24,48 @@ def getRecommendation(episode_id):
     
     return response
 
-def play(audioLink):
-    x = get(audioLink).content
-    file = open('./03_output/podcasts/podcast.mp3','wb')
-    file.write(x)
-    file.close()
+def play(recommendations):
+    i=0
+    while i < len(recommendations):
+        audioLink = getEpisodeLink(recommendations, i)
+
+        x = get(audioLink).content
+        file = open('./03_output/podcasts/podcast.mp3','wb')
+        file.write(x)
+        file.close()
+
+        p = multiprocessing.Process(target=playsound, args=('./03_output/podcasts/podcast.mp3',))
+        p.start()
+        action = input("type SKIP to skip podcast or type STOP to end the ride \n")
+        if action == "SKIP":
+            p.terminate()
+        if action == "STOP":
+            p.terminate()
+            break
+        
+        playsound('./03_output/podcasts/loadboardMessage.mp3')
+        i=i+1
 
 
-    p = multiprocessing.Process(target=playsound, args=('./03_output/podcasts/podcast.mp3',))
-    p.start()
-    input("press ENTER to stop playback")
-    p.terminate()
+def getEpisodeLink(recommendations, i):
+    if(i>=len(recommendations)):
+        return "ERROR: out of episodes to play"
 
-def getRandomEpisodeLink(recommendations):
-    randomNum = random.randint(0,len(recommendations))
-    audioLink = recommendations[randomNum]["audio"]
+    audioLink = recommendations[i]["audio"]
     return audioLink
 
 def main():
     # currently opening a test file
-    selectedOptions = getJson('./01_data/example.json')
     recommendations = getJson('./01_data/recommendations.json')
 
     #for list in selectedOptions["results"]:
     #    for episode in getRecommendation(list["id"]).json()["recommendations"]:
     #        recommendations.append(episode)
     
-    audioLink = getRandomEpisodeLink(recommendations)
-    play(audioLink)
+    #audioLink = getRandomEpisodeLink(recommendations)
+    random.shuffle(recommendations)
+
+    play(recommendations)
 
 
    #with open('./01_data/recommendations.json', "w") as outfile:
