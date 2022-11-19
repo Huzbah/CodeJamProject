@@ -7,14 +7,11 @@ import sys
 from listennotes import podcast_api
 from requests import get
 from pygame import mixer
+import pygame
 import random
-import multiprocessing
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import (QApplication, QCheckBox, QComboBox,  QDateEdit, QPushButton,
-    QMainWindow,
-    QVBoxLayout,
-    QWidget, QLabel)
-from PyQt6.QtGui import QIcon
+from tkinter import *
+import os 
+
 
 
 def getJson(fileName): 
@@ -69,19 +66,76 @@ def removeDuplicates(playlist):
             result.append(d)
     return result
 
-def podcastPlayer(playlist):
-    return
-
     
 def playEpisode(playlist, i):  #Play
-    currentsong = playlist[i]
-    print(currentsong)
-    mixer.music.load(currentsong)
+    audioLink = getEpisodeLink(playlist, i)
+
+    x = get(audioLink).content
+    file = open('./03_output/podcasts/podcast.mp3','wb')
+    file.write(x)
+    file.close()
+
+    mixer.music.load('./03_output/podcasts/podcast.mp3')
     mixer.music.play()
 
 def pauseEpisode():
-    return
+    mixer.music.pause()
+
+def stopEpisode():
+    mixer.music.stop()
+
+def unpauseEpisode():
+    mixer.music.unpause()
+
+def player(playlist):
+    root = Tk()
+    root.title('Music player')
     
+    mixer.init()
+    
+    def playEpisode(playlist, i): 
+        audioLink = getEpisodeLink(playlist, i)
+
+        x = get(audioLink).content
+        file = open('./03_output/podcasts/podcast.mp3','wb')
+        file.write(x)
+        file.close()
+
+        mixer.music.load('./03_output/podcasts/podcast.mp3')
+        mixer.music.play()
+
+    def pauseEpisode():
+        mixer.music.pause()
+
+    def stopPlaying():
+        mixer.music.stop()
+        exit
+
+    def unpauseEpisode():
+        mixer.music.unpause()
+    
+    eplist = Listbox(root, selectmode=SINGLE, bg="black", fg="white", font=('arial', 15), width=40)  #Creating listbox customizing the looks of it
+    eplist.grid(columnspan=5)
+    eplist.insert(END, getEpisodeTitle(playlist[0]))
+    
+    i=0
+    playbtn = Button(root, text="Play", command=playEpisode(playlist, i))
+    playbtn.grid(row=1, column=0)
+
+    pausebtn = Button(root, text="Pause", command=pauseEpisode)
+    pausebtn.grid(row=1, column=1)
+
+    Resumebtn = Button(root, text="Resume", command=unpauseEpisode)
+    Resumebtn.grid(row=1, column=2)
+
+    stopbtn = Button(root, text="End Drive", command=stopPlaying)
+    stopbtn.grid(row=1, column=3)
+
+    #And finally run the loop start the application
+    mainloop()  
+
+
+
 def play(playlist):
     i=0
     while i < len(playlist):
@@ -112,49 +166,6 @@ def play(playlist):
         i=i+1
 
 
-def stop():
-    return 0
-
-def popUp(p, episode):
-    # create a window to take in queue suggestions
-    class MainWindow(QMainWindow):
-        def __init__(self):
-            super().__init__()
-
-            self.setWindowTitle("Podcast Player")
-            
-            label = QLabel('Currently Playing:')
-            
-           # title = QLabel('Currently listening to: '+ epTitle+' from '+ podTitle)
-
-            pause = QPushButton()
-            pause.setText('Pause')
-            # confirm.setEnabled(False)
-            pause.clicked.connect(stop)
-    
-            layout = QVBoxLayout()
-            layout.addWidget(label)
-            layout.addWidget(title)
-            
-            container = QWidget()
-            container.setLayout(layout)
-            layout.addWidget(pause)
-
-            self.setCentralWidget(container)
-            
-        def text_changed(self, s):
-            return s
-
-        def current_text_changed(self, s):
-            return s
-
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-
-
-    app.exec()
-
 def main():
     # currently opening a test file
     selectedOptions = getJson('./01_data/example.json')
@@ -173,7 +184,10 @@ def main():
     random.shuffle(recommendations)
     playlist=playlist+recommendations
     playlist=removeDuplicates(playlist)
-    play(playlist)
+
+    player(playlist)
+
+    #play(playlist)
 
 
     #with open('./01_data/recommendations.json', "w") as outfile:
