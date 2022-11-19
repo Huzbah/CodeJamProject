@@ -3,12 +3,12 @@ from PyQt6.QtWidgets import QLabel, QPushButton, QComboBox, QMainWindow, QApplic
 from PyQt6.QtGui import QIcon
 import sys
 
-genres = {'Personal Finance':144, 'Locally Focused':151, 'Sports':77, 'Business':93, 'Health & Fitness':88, 'Arts':100, 'Music':134, 'Technology':127, 'Fiction':168, 'History':125, 'Kids & Family':132, 'News':99, 'Comedy':133, 'Society & Culture':122, 'Religion & Spirituality':69, 'Government':117, 'TV & Film':68, 'Leisure':82, 'Education':111, 'Science':107, 'True Crime':135}
-genres = dict(sorted(genres.items()))
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+
+        genres = {'Personal Finance':144, 'Locally Focused':151, 'Sports':77, 'Business':93, 'Health & Fitness':88, 'Arts':100, 'Music':134, 'Technology':127, 'Fiction':168, 'History':125, 'Kids & Family':132, 'News':99, 'Comedy':133, 'Society & Culture':122, 'Religion & Spirituality':69, 'Government':117, 'TV & Film':68, 'Leisure':82, 'Education':111, 'Science':107, 'True Crime':135}
+        genres = dict(sorted(genres.items()))
 
         self.setWindowTitle('Podcast Mode')
 
