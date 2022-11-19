@@ -3,7 +3,7 @@
 #the selected podcasts
 #attempts to make the queue the length of the drive
 import json
-from collections import Counter
+from listennotes import podcast_api
 
 def getJson(fileName): 
     f = open(fileName)
@@ -12,18 +12,31 @@ def getJson(fileName):
 
 #clean common words
 def findTopMatches(allOptions, selectedOptions):
-    for i in range(1):
-        textData = allOptions["results"][i]['title_original']+allOptions["results"][i]['description_original']
-    splitText = textData.split()
-    counter = Counter(splitText)
-    most_occur = counter.most_common(4)
-    print(most_occur)
+    preferedGenreCombos = [2]
+    print(len(selectedOptions["results"]))
+    for i in selectedOptions["results"]:
+        print(i["podcast"]["genre_ids"])
+    #print(selectedOptions["results"][9])
+    #for i in selectedOptions["results"][0]:
+    #    preferedGenreCombos.append(i['podcast']['genre_ids'])
+    #    print(preferedGenreCombos)
+
+def getApiKey():
+    return '7591584d4b5d4dfd950f972ef7734277'
+
+def getRecommendation(episode_id):
+    api_key = getApiKey()
+
+    client = podcast_api.Client(api_key=api_key)
+
+    response = client.fetchRecommendationsForEpisode(id: episode_id)
+    
+    return response
 
 def main():
     # currently opening a test file
-    allOptions = getJson('./01_data/example.json')
     selectedOptions = getJson('./01_data/example.json')
-    findTopMatches(allOptions, selectedOptions)
+    getRecommendation(selectedOptions["results"][0][""])
 
 
 if __name__ == '__main__':
