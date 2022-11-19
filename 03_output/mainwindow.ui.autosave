@@ -58,7 +58,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="buisness_2">
+      <widget class="QCheckBox" name="buisness">
        <property name="text">
         <string>Buisness</string>
        </property>
@@ -135,7 +135,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="buisness">
+      <widget class="QCheckBox" name="news">
        <property name="text">
         <string>News</string>
        </property>
