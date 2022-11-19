@@ -136,16 +136,16 @@ def main():
     # currently opening a test file
     selectedOptions = getJson('./01_data/queue.json')
     
-    #recommendations = []
-    recommendations = getJson('./01_data/recommendations.json')
+    recommendations = []
+    #recommendations = getJson('./01_data/recommendations.json')
     playlist=[]
 
     for key in selectedOptions:
         playlist.append(selectedOptions[key])
 
-    #for key in selectedOptions:
-    #    for recommendedEpisode in getRecommendations(selectedOptions[key]["id"]).json()["recommendations"]:
-    #        recommendations.append(recommendedEpisode)
+    for key in selectedOptions:
+       for recommendedEpisode in getRecommendations(selectedOptions[key]["id"]).json()["recommendations"]:
+            recommendations.append(recommendedEpisode)
     
     random.shuffle(recommendations)
     playlist=playlist+recommendations
@@ -154,8 +154,6 @@ def main():
     player(playlist)
 
 
-    #with open('./01_data/recommendations.json', "w") as outfile:
-     #   json.dump(playlist,outfile, indent=4)
 
 if __name__ == '__main__':
     main()
