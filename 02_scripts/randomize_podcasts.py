@@ -14,6 +14,7 @@ import os
 from itertools import cycle
 from search_term_select import *
 
+CURR = 0
 
 def getJson(fileName): 
     f = open(fileName)
@@ -76,10 +77,8 @@ def player(playlist):
     
     mixer.init()
 
-    def playEpisode(playlist, i): 
-        print("playing")
-        audioLink = getEpisodeLink(playlist, i)
-
+    def playEpisode(playlist): 
+        audioLink = getEpisodeLink(playlist, CURR)
         x = get(audioLink).content
         file = open('./03_output/podcasts/podcast.mp3','wb')
         file.write(x)
@@ -97,22 +96,23 @@ def player(playlist):
     def unpauseEpisode():
         mixer.music.unpause()
 
-    def nextEpisode(playlist, i):
+    def nextEpisode(playlist):
         mixer.music.stop()
         mixer.music.unload()
         mixer.music.load('./03_output/podcasts/loadboardMessage1.mp3')
         mixer.music.play()
         while mixer.music.get_busy():
             pass
+    
         mixer.music.stop()
         mixer.music.unload()
 
-        i=i+1
-        playEpisode(playlist, i)
+        global CURR
+        CURR =  CURR + 1
+        playEpisode(playlist)
 
-    i=0
     
-    playbtn = Button(root, text="Play", command = lambda: playEpisode(playlist, i))
+    playbtn = Button(root, text="Play", command = lambda: playEpisode(playlist))
     playbtn.grid(row=1, column=0)
 
     pausebtn = Button(root, text="Pause", command=pauseEpisode)
@@ -121,10 +121,8 @@ def player(playlist):
     resumebtn = Button(root, text="Resume", command=unpauseEpisode)
     resumebtn.grid(row=1, column=2)
 
-
-    nextbtn = Button(root, text="Skip", command=lambda: nextEpisode(playlist,i))
+    nextbtn = Button(root, text="Skip", command=lambda: nextEpisode(playlist))
     nextbtn.grid(row=1, column=3)
-
 
     stopbtn = Button(root, text="End Drive", command=stopPlaying)
     stopbtn.grid(row=2, column=1)
@@ -145,15 +143,15 @@ def main():
     for key in selectedOptions:
         playlist.append(selectedOptions[key])
 
-    #for chosenEpisode in selectedOptions["results"]:
-    #    for recommendedEpisode in getRecommendations(chosenEpisode["id"]).json()["recommendations"]:
-    #       recommendations.append(recommendedEpisode)
+    #for key in selectedOptions:
+    #    for recommendedEpisode in getRecommendations(selectedOptions[key]["id"]).json()["recommendations"]:
+    #        recommendations.append(recommendedEpisode)
     
     random.shuffle(recommendations)
     playlist=playlist+recommendations
     playlist=removeDuplicates(playlist)
 
-    #player(playlist)
+    player(playlist)
 
 
     #with open('./01_data/recommendations.json', "w") as outfile:
