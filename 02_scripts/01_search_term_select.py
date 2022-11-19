@@ -4,7 +4,7 @@ from PyQt6.QtGui import QIcon
 import sys
 
 genres = {'Personal Finance':144, 'Locally Focused':151, 'Sports':77, 'Business':93, 'Health & Fitness':88, 'Arts':100, 'Music':134, 'Technology':127, 'Fiction':168, 'History':125, 'Kids & Family':132, 'News':99, 'Comedy':133, 'Society & Culture':122, 'Religion & Spirituality':69, 'Government':117, 'TV & Film':68, 'Leisure':82, 'Education':111, 'Science':107, 'True Crime':135}
-dict(sorted(genres.items()))
+genres = dict(sorted(genres.items()))
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -63,10 +63,7 @@ class MainWindow(QMainWindow):
              self.confirm.setEnabled(False)
 
     def make_file(self):
-        selection1 = self.genre1.currentText()
-        selection2 = self.genre2.currentText()
-        selection3 = self.genre3.currentText()
-        genre_selection = [genres.get(selection1), genres.get(selection2), genres.get(selection3)]
+        genre_selection = self.genre1.currentText(), self.genre2.currentText(), self.genre3.currentText()
         with open('../01_data/examplefile.txt', 'w') as f:
             f.write(str(genre_selection))
 
@@ -76,3 +73,4 @@ def run_search_select():
     w.show()
     app.exec()
 
+run_search_select()
