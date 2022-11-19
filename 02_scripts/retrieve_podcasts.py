@@ -11,7 +11,10 @@ from PyQt6.QtWidgets import (QApplication, QCheckBox, QComboBox,  QDateEdit, QPu
     QWidget, QLabel)
 from PyQt6.QtGui import QIcon
 
+api_key = ""
+
 def get_podcast(term):
+    global api_key
     client = podcast_api.Client(api_key=api_key)      
     response = client.search(q=term, offset=5)
     #print(response.json)
@@ -35,10 +38,10 @@ def get_title_dict(response):
     return pod_dict
 
 def select_queue():
+    global api_key
+    api_key = open("./01_data/private/key.txt", "r").readline() # load api
 
-    api_key = open("../01_data/private/key.txt", "r").readline() # load api
-
-    with open("../01_data/examplefile.txt", "rt") as f: #load genre ids selected
+    with open("./01_data/examplefile.txt", "rt") as f: #load genre ids selected
         for line in f:
             terms= line.split(',')
             
@@ -72,7 +75,7 @@ def select_queue():
             
             for pod in pod_dict1:
                 
-                icon=QIcon("../03_output/icon.png")
+                icon=QIcon("./03_output/icon.png")
                 combobox1.addItem(pod, icon)
             
             # Connect signals
@@ -81,7 +84,7 @@ def select_queue():
             
             for pod in pod_dict2:
                 
-                icon=QIcon("../03_output/icon.png")
+                icon=QIcon("./03_output/icon.png")
                 combobox2.addItem(pod, icon)
             
             # Connect signals
@@ -90,7 +93,7 @@ def select_queue():
             
             for pod in pod_dict3:
                 
-                icon=QIcon("../03_output/icon.png")
+                icon=QIcon("./03_output/icon.png")
                 combobox3.addItem(pod, icon)
             
             # Connect signals
@@ -130,5 +133,5 @@ def select_queue():
     json_object = json.dumps(queue_dict)
 
     # Writing to file
-    with open("../01_data/queue.json", "w") as outfile:
+    with open("./01_data/queue.json", "w") as outfile:
         outfile.write(json_object)

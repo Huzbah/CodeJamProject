@@ -67,7 +67,7 @@ class MainWindow(QMainWindow):
         selection2 = self.genre2.currentText()
         selection3 = self.genre3.currentText()
         genre_selection = [genres.get(selection1), genres.get(selection2), genres.get(selection3)]
-        with open('../01_data/examplefile.txt', 'w') as f:
+        with open('./01_data/examplefile.txt', 'w') as f:
             f.write(str(genre_selection))
 
 def run_search_select():

@@ -1,1 +1,1 @@
-'Business', 'Technology', 'Health'
+[144, 77, 88]
