@@ -31,10 +31,11 @@ class MainWindow(QMainWindow):
         self.genre3.addItems(genres)
         self.genre3.activated.connect(self.check_index)
 
-        confirm = QPushButton()
-        confirm.setText('Confirm Selection')
-        # confirm.setEnabled(False)
-        confirm.clicked.connect(self.close)
+        self.confirm = QPushButton()
+        self.confirm.setText('Confirm Selection')
+        self.confirm.setEnabled(False)
+        self.confirm.clicked.connect(self.close)
+        self.confirm
 
         layout = QVBoxLayout()
         layout.addWidget(label1)
@@ -43,7 +44,7 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.genre2)
         layout.addWidget(label3)
         layout.addWidget(self.genre3)
-        layout.addWidget(confirm)
+        layout.addWidget(self.confirm)
 
         container = QWidget()
         container.setLayout(layout)
@@ -54,9 +55,18 @@ class MainWindow(QMainWindow):
         cindex1 = self.genre1.currentIndex()
         cindex2 = self.genre2.currentIndex()
         cindex3 = self.genre3.currentIndex()
-        print(f"Index signal: {index}, currentIndex {cindex1}")
+        indices = cindex1, cindex2, cindex3
 
-    # def check_confirm(self, index):
+        if indices[0]>0 and indices[1] >0 and indices[2]>0:
+            self.confirm.setEnabled(True)
+        else:
+             self.confirm.setEnabled(False)
+
+        return indices
+
+    # def allow_confirm(self, index):
+
+        
 
 
 app = QApplication(sys.argv)
