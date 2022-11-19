@@ -7,6 +7,7 @@ from listennotes import podcast_api
 from requests import get
 from playsound import playsound
 import random
+import multiprocessing
 
 def getJson(fileName): 
     f = open(fileName)
@@ -29,7 +30,11 @@ def play(audioLink):
     file.write(x)
     file.close()
 
-    playsound('./03_output/podcasts/podcast.mp3')
+
+    p = multiprocessing.Process(target=playsound, args=('./03_output/podcasts/podcast.mp3',))
+    p.start()
+    input("press ENTER to stop playback")
+    p.terminate()
 
 def getRandomEpisodeLink(recommendations):
     randomNum = random.randint(0,len(recommendations))
