@@ -11,21 +11,11 @@ from PyQt6.QtWidgets import (QApplication, QCheckBox, QComboBox,  QDateEdit, QPu
     QWidget, QLabel)
 from PyQt6.QtGui import QIcon
 
-api_key = open("../01_data/private/key.txt", "r").readline() # load api
-
-with open("../01_data/examplefile.txt", "rt") as f: #load genre ids selected
-    for line in f:
-        genre_ids= line.split(',')
-        
-#declare variable to collect queue
-json_list=[] 
-queue_list=[]
-
 #fetch best podcasts in genre
 
 def get_podcast(term):
     client = podcast_api.Client(api_key=api_key)      
-    response = client.fetch_best_podcasts(genre_id=term, page=1, region='us')
+    response = client.search(q='star wars', offset=5)
     #print(response.json)
     return response.json()
 
@@ -47,10 +37,20 @@ def get_title_dict(response):
             break
     return pod_dict
 
+api_key = open("../01_data/private/key.txt", "r").readline() # load api
+
+with open("../01_data/examplefile.txt", "rt") as f: #load genre ids selected
+    for line in f:
+        terms= line.split(',')
+        
+#declare variable to collect queue
+json_list=[] 
+queue_list=[]
+
 #get podcasts with call to api
-response1=get_podcast(genre_ids[0]).get('podcasts')
-response2=get_podcast(genre_ids[1]).get('podcasts')
-response3=get_podcast(genre_ids[2]).get('podcasts')
+response1=get_podcast(terms[0]).get('podcasts')
+response2=get_podcast(terms[1]).get('podcasts')
+response3=get_podcast(terms[2]).get('podcasts')
 
 pod_dict1=get_title_dict(response1)
 pod_dict2=get_title_dict(response2)
