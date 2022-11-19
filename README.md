@@ -14,7 +14,5 @@ The app was built using python, listen now API and PyQt6.
 ## Challenges we ran into
 Using a free API that allows limited calls.
 
-## What we learned
-
 ## What's next for Podcast Player for Long Drives
 We would like to add a location feature to the alert prompts so that it would incentivize the drivers to turn on their location. We would also like to improve our GUI and add more interactive features such as drive updates, trivia, and extend to more than just podcasts.
