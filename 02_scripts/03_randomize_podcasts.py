@@ -96,17 +96,22 @@ def player(playlist):
 
     def unpauseEpisode():
         mixer.music.unpause()
-    
-    #def nextEpisode(playlist, i):
-    #    mixer.music.unload()
-    #    mixer.music.load('./03_output/podcasts/loadboardMessage1.mp3')
-    #    mixer.music.play()
 
-        #i=i+1
-        #playEpisode(playlist, i)
+    def nextEpisode(playlist, i):
+        mixer.music.stop()
+        mixer.music.unload()
+        mixer.music.load('./03_output/podcasts/loadboardMessage1.mp3')
+        mixer.music.play()
+        while mixer.music.get_busy():
+            pass
+        mixer.music.stop()
+        mixer.music.unload()
+
+        playEpisode(playlist, i+1)
+
 
     
-    playbtn = Button(root, text="Play", command=playEpisode(playlist, 0))
+    playbtn = Button(root, text="Play", command = lambda: playEpisode(playlist, 0))
     playbtn.grid(row=1, column=0)
 
     pausebtn = Button(root, text="Pause", command=pauseEpisode)
@@ -115,8 +120,10 @@ def player(playlist):
     resumebtn = Button(root, text="Resume", command=unpauseEpisode)
     resumebtn.grid(row=1, column=2)
 
-    #nextbtn = Button(root, text="Skip", command=nextEpisode(playlist, i))
-    #nextbtn.grid(row=1, column=3)
+
+    nextbtn = Button(root, text="Skip", command=lambda: nextEpisode(playlist,0))
+    nextbtn.grid(row=1, column=3)
+
 
     stopbtn = Button(root, text="End Drive", command=stopPlaying)
     stopbtn.grid(row=2, column=1)
