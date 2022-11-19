@@ -1,1 +1,1 @@
-'Comedy', "News", "Arts"
+93, 72, 51
