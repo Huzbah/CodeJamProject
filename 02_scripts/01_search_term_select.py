@@ -70,9 +70,9 @@ class MainWindow(QMainWindow):
         with open('../01_data/examplefile.txt', 'w') as f:
             f.write(str(genre_selection))
 
-app = QApplication(sys.argv)
-w = MainWindow()
-w.show()
-
-sys.exit(app.exec())
+def run_search_select():
+    app = QApplication(sys.argv)
+    w = MainWindow()
+    w.show()
+    app.exec()
 
