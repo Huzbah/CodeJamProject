@@ -16,20 +16,20 @@ api_key = ""
 def get_podcast(term):
     global api_key
     client = podcast_api.Client(api_key=api_key)      
-    response = client.search(q=term, offset=5)
+    response = client.search(q=term, offset=5, unique_podcasts=1, language= 'English')
     #print(response.json)
     return response.json()
 #display best podcasts and select from list to prepare queue
 #merge json for recommendation during drive time
 
 def get_title_dict(response):
-    pick=5 # allows to choose for 5 pods
+    pick=5 # allows to choose from 5 pods
     i=0
     pod_dict={}   #for each podcast store the title and image to add to combobox
     
     for pod in response:
         i=i+1
-        pod_dict[pod.get('podcast').get('title_original')]=pod
+        pod_dict[pod.get('podcast').get('title_original')]= pod
             #response = requests.get(pod.get('image'))
             #img = Image.open(BytesIO(response.content))
             #img.save("../03_output/"+pod.get('title')+".png", "PNG")
