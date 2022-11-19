@@ -11,6 +11,7 @@ import pygame
 import random
 from tkinter import *
 import os 
+from itertools import cycle
 
 
 
@@ -53,8 +54,10 @@ def getEpisodeTitle(episode):
 def getEpisodeLink(playlist, i):
     if(i>=len(playlist)):
         return "ERROR: out of episodes to play"
-
-    audioLink = playlist[i]["audio"]
+    try:
+        audioLink = playlist[i]["audio"]
+    except:
+        audioLink = playlist[i]["listennotes_url"]
     return audioLink
 
 def removeDuplicates(playlist):
@@ -65,26 +68,6 @@ def removeDuplicates(playlist):
             seen.append(d["id"])
             result.append(d)
     return result
-
-    
-def playEpisode(playlist, i):  #Play
-    audioLink = getEpisodeLink(playlist, i)
-
-    x = get(audioLink).content
-    file = open('./03_output/podcasts/podcast.mp3','wb')
-    file.write(x)
-    file.close()
-
-    mixer.music.load('./03_output/podcasts/podcast.mp3')
-    mixer.music.play()
-
-def pauseEpisode():
-    mixer.music.pause()
-
-def stopEpisode():
-    mixer.music.stop()
-
-def unpauseEpisode():
     mixer.music.unpause()
 
 def player(playlist):
@@ -92,15 +75,15 @@ def player(playlist):
     root.title('Music player')
     
     mixer.init()
-    
+
     def playEpisode(playlist, i): 
+        print("playing")
         audioLink = getEpisodeLink(playlist, i)
 
         x = get(audioLink).content
         file = open('./03_output/podcasts/podcast.mp3','wb')
         file.write(x)
         file.close()
-
         mixer.music.load('./03_output/podcasts/podcast.mp3')
         mixer.music.play()
 
@@ -114,22 +97,29 @@ def player(playlist):
     def unpauseEpisode():
         mixer.music.unpause()
     
-    eplist = Listbox(root, selectmode=SINGLE, bg="black", fg="white", font=('arial', 15), width=40)  #Creating listbox customizing the looks of it
-    eplist.grid(columnspan=5)
-    eplist.insert(END, getEpisodeTitle(playlist[0]))
+    #def nextEpisode(playlist, i):
+    #    mixer.music.unload()
+    #    mixer.music.load('./03_output/podcasts/loadboardMessage1.mp3')
+    #    mixer.music.play()
+
+        #i=i+1
+        #playEpisode(playlist, i)
+
     
-    i=0
-    playbtn = Button(root, text="Play", command=playEpisode(playlist, i))
+    playbtn = Button(root, text="Play", command=playEpisode(playlist, 0))
     playbtn.grid(row=1, column=0)
 
     pausebtn = Button(root, text="Pause", command=pauseEpisode)
     pausebtn.grid(row=1, column=1)
 
-    Resumebtn = Button(root, text="Resume", command=unpauseEpisode)
-    Resumebtn.grid(row=1, column=2)
+    resumebtn = Button(root, text="Resume", command=unpauseEpisode)
+    resumebtn.grid(row=1, column=2)
+
+    #nextbtn = Button(root, text="Skip", command=nextEpisode(playlist, i))
+    #nextbtn.grid(row=1, column=3)
 
     stopbtn = Button(root, text="End Drive", command=stopPlaying)
-    stopbtn.grid(row=1, column=3)
+    stopbtn.grid(row=2, column=1)
 
     #And finally run the loop start the application
     mainloop()  
@@ -168,14 +158,14 @@ def play(playlist):
 
 def main():
     # currently opening a test file
-    selectedOptions = getJson('./01_data/example.json')
+    selectedOptions = getJson('./01_data/queue.json')
     
     #recommendations = []
     recommendations = getJson('./01_data/recommendations.json')
     playlist=[]
 
-    for episode in selectedOptions["results"]:
-        playlist.append(episode)
+    for key in selectedOptions:
+        playlist.append(selectedOptions[key])
 
     #for chosenEpisode in selectedOptions["results"]:
     #    for recommendedEpisode in getRecommendations(chosenEpisode["id"]).json()["recommendations"]:
@@ -190,8 +180,8 @@ def main():
     #play(playlist)
 
 
-    #with open('./01_data/recommendations.json', "w") as outfile:
-    #    json.dump(playlist,outfile, indent=4)
+    with open('./01_data/recommendations.json', "w") as outfile:
+        json.dump(playlist,outfile, indent=4)
 
 if __name__ == '__main__':
     main()
