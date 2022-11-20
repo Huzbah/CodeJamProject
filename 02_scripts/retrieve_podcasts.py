@@ -39,9 +39,9 @@ def get_title_dict(response):
 
 def select_queue():
     global api_key
-    api_key = open("./01_data/private/key.txt", "r").readline() # load api
+    api_key = open("../01_data/private/key.txt", "r").readline() # load api
 
-    with open("./01_data/examplefile.txt", "rt") as f: #load genre ids selected
+    with open("../01_data/examplefile.txt", "rt") as f: #load genre ids selected
         for line in f:
             terms= line.split(',')
             
@@ -76,7 +76,7 @@ def select_queue():
             label1 = QLabel('Select the first podcast:')
             for pod in pod_dict1:
                 
-                icon=QIcon("./03_output/icon.png")
+                icon=QIcon("../03_output/icon.png")
                 combobox1.addItem(pod, icon)
             
             # Connect signals
@@ -86,7 +86,7 @@ def select_queue():
             label2 = QLabel('Select the second podcast:')
             for pod in pod_dict2:
                 
-                icon=QIcon("./03_output/icon.png")
+                icon=QIcon("../03_output/icon.png")
                 combobox2.addItem(pod, icon)
           
             combobox2.currentTextChanged.connect(self.text_changed)
@@ -94,7 +94,7 @@ def select_queue():
             label3 = QLabel('Select the third podcast:')
             for pod in pod_dict3:
                 
-                icon=QIcon("./03_output/icon.png")
+                icon=QIcon("../03_output/icon.png")
                 combobox3.addItem(pod, icon)
            
             combobox3.currentTextChanged.connect(self.text_changed)
@@ -136,5 +136,5 @@ def select_queue():
     json_object = json.dumps(queue_dict)
 
     # Writing to file
-    with open("./01_data/queue.json", "w") as outfile:
+    with open("../01_data/queue.json", "w") as outfile:
         outfile.write(json_object)

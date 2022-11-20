@@ -14,7 +14,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle('123Loadboard')
 
         self.truck = QLabel()
-        self.truck.setPixmap(QPixmap('./01_data/truck.svg'))
+        self.truck.setPixmap(QPixmap('../01_data/truck.svg'))
         self.drive = QPushButton('Start Drive')
         self.drive.clicked.connect(self.close)
 
