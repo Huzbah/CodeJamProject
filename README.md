@@ -19,9 +19,9 @@ We would like to add a location feature to the alert prompts so that it would in
 
 ## SOURCES
 https://www.listennotes.com/api/docs/. 
-https://www.studytonight.com/tkinter/music-player-application-using-tkinter   
-https://stackoverflow.com/questions/9427163/remove-duplicate-dict-in-list-in-python   
-https://www.w3schools.com/python/ref_random_shuffle.asp   
-https://stackoverflow.com/questions/39128738/downloading-a-song-through-python-requests   
+https://www.studytonight.com/tkinter/music-player-application-using-tkinter.    
+https://stackoverflow.com/questions/9427163/remove-duplicate-dict-in-list-in-python.    
+https://www.w3schools.com/python/ref_random_shuffle.asp.    
+https://stackoverflow.com/questions/39128738/downloading-a-song-through-python-requests.    
 https://doc.qt.io/qtforpython/?hsCtaTracking=464a02ec-f9fd-40ba-aa60-8ec24b6a0016%7Cd3b1d1a7-49c6-4f79-91b8-2a4d35c64ac2. 
 https://www.pythonguis.com/tutorials/pyqt6-creating-your-first-window/. 
