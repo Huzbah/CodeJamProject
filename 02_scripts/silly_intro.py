@@ -1,9 +1,6 @@
-import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QWidget
 from PyQt6.QtGui import QPixmap
-from search_term_select import *
-from retrieve_podcasts import *
-from randomize_podcasts import *
+import sys
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -31,7 +28,3 @@ def start_drive():
     app.exec()
 
 start_drive()
-
-run_search_select()
-select_queue()
-main()
