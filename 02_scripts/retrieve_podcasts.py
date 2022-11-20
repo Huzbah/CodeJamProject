@@ -82,33 +82,25 @@ def select_queue():
             # Connect signals
         
             combobox1.currentTextChanged.connect(self.text_changed)
-            combobox1.activated.connect(self.check_index)
-             
+            
             label2 = QLabel('Select the second podcast:')
             for pod in pod_dict2:
                 
                 icon=QIcon("./03_output/icon.png")
                 combobox2.addItem(pod, icon)
-            
-            # Connect signals
-        
+          
             combobox2.currentTextChanged.connect(self.text_changed)
-            combobox2.activated.connect(self.check_index)
-            
+           
             label3 = QLabel('Select the third podcast:')
             for pod in pod_dict3:
                 
                 icon=QIcon("./03_output/icon.png")
                 combobox3.addItem(pod, icon)
-            
-            # Connect signals
-            combobox3.activated.connect(self.check_index)
+           
             combobox3.currentTextChanged.connect(self.text_changed)
             
             confirm = QPushButton()
             confirm.setText('Confirm Selection')
-            self.confirm.setEnabled(False)
-            # confirm.setEnabled(False)
             confirm.clicked.connect(self.close)
     
             layout = QVBoxLayout()
@@ -126,20 +118,10 @@ def select_queue():
 
             self.setCentralWidget(container)
             
-        def check_index(self):
-            cindex1 = self.genre1.currentIndex()
-            cindex2 = self.genre2.currentIndex()
-            cindex3 = self.genre3.currentIndex()
-            indices = [cindex1, cindex2, cindex3]
-
-            if indices[0]>0 and indices[1] >0 and indices[2]>0:
-                self.confirm.setEnabled(True)
-            else:
-                self.confirm.setEnabled(False)
-
-            
+    
         def text_changed(self, s):
             queue_list.append(s)
+            
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
