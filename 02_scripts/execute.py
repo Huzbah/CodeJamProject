@@ -33,7 +33,6 @@ def start_drive():
     app.exec()
 
 start_drive()
-
 run_search_select()
 select_queue()
 main()
