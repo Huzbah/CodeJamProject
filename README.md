@@ -18,8 +18,8 @@ Using a free API that allows limited calls.
 We would like to add a location feature to the alert prompts so that it would incentivize the drivers to turn on their location. We would also like to improve our GUI and add more interactive features such as drive updates, trivia, and extend to more than just podcasts.
 
 ## SOURCES
-https://www.listennotes.com/api/docs/ \n
-https://www.studytonight.com/tkinter/music-player-application-using-tkinter \n
-https://stackoverflow.com/questions/9427163/remove-duplicate-dict-in-list-in-python \n
-https://www.w3schools.com/python/ref_random_shuffle.asp \n
-https://stackoverflow.com/questions/39128738/downloading-a-song-through-python-requests \n
+https://www.listennotes.com/api/docs/ 
+https://www.studytonight.com/tkinter/music-player-application-using-tkinter 
+https://stackoverflow.com/questions/9427163/remove-duplicate-dict-in-list-in-python 
+https://www.w3schools.com/python/ref_random_shuffle.asp 
+https://stackoverflow.com/questions/39128738/downloading-a-song-through-python-requests 
