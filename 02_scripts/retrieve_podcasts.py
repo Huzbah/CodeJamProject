@@ -16,20 +16,20 @@ api_key = ""
 def get_podcast(term):
     global api_key
     client = podcast_api.Client(api_key=api_key)      
-    response = client.search(q=term, offset=5)
+    response = client.search(q=term, offset=5, unique_podcasts=1, language= 'English')
     #print(response.json)
     return response.json()
 #display best podcasts and select from list to prepare queue
 #merge json for recommendation during drive time
 
 def get_title_dict(response):
-    pick=5 # allows to choose for 5 pods
+    pick=5 # allows to choose from 5 pods
     i=0
     pod_dict={}   #for each podcast store the title and image to add to combobox
     
     for pod in response:
         i=i+1
-        pod_dict[pod.get('podcast').get('title_original')]=pod
+        pod_dict[pod.get('podcast').get('title_original')]= pod
             #response = requests.get(pod.get('image'))
             #img = Image.open(BytesIO(response.content))
             #img.save("../03_output/"+pod.get('title')+".png", "PNG")
@@ -73,6 +73,7 @@ def select_queue():
             combobox2= QComboBox()
             combobox3= QComboBox()
             
+            label1 = QLabel('Select the first podcast:')
             for pod in pod_dict1:
                 
                 icon=QIcon("./03_output/icon.png")
@@ -81,7 +82,9 @@ def select_queue():
             # Connect signals
         
             combobox1.currentTextChanged.connect(self.text_changed)
-            
+            combobox1.activated.connect(self.check_index)
+             
+            label2 = QLabel('Select the second podcast:')
             for pod in pod_dict2:
                 
                 icon=QIcon("./03_output/icon.png")
@@ -90,25 +93,31 @@ def select_queue():
             # Connect signals
         
             combobox2.currentTextChanged.connect(self.text_changed)
+            combobox2.activated.connect(self.check_index)
             
+            label3 = QLabel('Select the third podcast:')
             for pod in pod_dict3:
                 
                 icon=QIcon("./03_output/icon.png")
                 combobox3.addItem(pod, icon)
             
             # Connect signals
-        
+            combobox3.activated.connect(self.check_index)
             combobox3.currentTextChanged.connect(self.text_changed)
             
             confirm = QPushButton()
             confirm.setText('Confirm Selection')
+            self.confirm.setEnabled(False)
             # confirm.setEnabled(False)
             confirm.clicked.connect(self.close)
     
             layout = QVBoxLayout()
             layout.addWidget(label)
+            layout.addWidget(label1)
             layout.addWidget(combobox1)
+            layout.addWidget(label2)
             layout.addWidget(combobox2)
+            layout.addWidget(label3)
             layout.addWidget(combobox3)
             
             container = QWidget()
@@ -116,6 +125,18 @@ def select_queue():
             layout.addWidget(confirm)
 
             self.setCentralWidget(container)
+            
+        def check_index(self):
+            cindex1 = self.genre1.currentIndex()
+            cindex2 = self.genre2.currentIndex()
+            cindex3 = self.genre3.currentIndex()
+            indices = [cindex1, cindex2, cindex3]
+
+            if indices[0]>0 and indices[1] >0 and indices[2]>0:
+                self.confirm.setEnabled(True)
+            else:
+                self.confirm.setEnabled(False)
+
             
         def text_changed(self, s):
             queue_list.append(s)
