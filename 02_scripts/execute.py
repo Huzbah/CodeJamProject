@@ -6,6 +6,7 @@ from retrieve_podcasts import *
 from randomize_podcasts import *
 
 #silly intro
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
