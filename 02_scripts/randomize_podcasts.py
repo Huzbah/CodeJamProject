@@ -11,10 +11,6 @@ import pygame
 import random
 from tkinter import *
 import os 
-from itertools import cycle
-from search_term_select import *
-from retrieve_podcasts import *
-from execute import *
 
 CURR = 0
 
@@ -101,15 +97,16 @@ def player(playlist):
     def nextEpisode(playlist):
         mixer.music.stop()
         mixer.music.unload()
-        mixer.music.load('./03_output/podcasts/loadboardMessage1.mp3')
+        global CURR
+        i = CURR%3 +1
+        mixer.music.load('./03_output/podcasts/loadboardMessage'+str(i)+'.mp3')
         mixer.music.play()
         while mixer.music.get_busy():
             pass
     
         mixer.music.stop()
         mixer.music.unload()
-
-        global CURR
+    
         CURR =  CURR + 1
         playEpisode(playlist)
 
@@ -137,19 +134,22 @@ def main():
     # currently opening a test file
     selectedOptions = getJson('./01_data/queue.json')
     
-    #recommendations = []
-    recommendations = getJson('./01_data/recommendations.json')
+    recommendations = []
+    #recommendations = getJson('./01_data/recommendations.json')
     playlist=[]
 
     for key in selectedOptions:
         playlist.append(selectedOptions[key])
 
-    #for key in selectedOptions:
-    #   for recommendedEpisode in getRecommendations(selectedOptions[key]["id"]).json()["recommendations"]:
-    #        recommendations.append(recommendedEpisode)
+    for key in selectedOptions:
+       for recommendedEpisode in getRecommendations(selectedOptions[key]["id"]).json()["recommendations"]:
+            recommendations.append(recommendedEpisode)
     
     random.shuffle(recommendations)
     playlist=playlist+recommendations
     playlist=removeDuplicates(playlist)
 
     player(playlist)
+
+if __name__ == "__main__":
+    main()
