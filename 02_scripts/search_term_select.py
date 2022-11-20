@@ -64,7 +64,7 @@ class MainWindow(QMainWindow):
 
     def make_file(self):
         genre_selection = self.genre1.currentText(), self.genre2.currentText(), self.genre3.currentText()
-        with open('../01_data/examplefile.txt', 'w') as f:
+        with open('./01_data/examplefile.txt', 'w') as f:
             f.write(str(genre_selection))
 
 def run_search_select():
@@ -72,5 +72,3 @@ def run_search_select():
     w = MainWindow()
     w.show()
     app.exec()
-
-run_search_select()
