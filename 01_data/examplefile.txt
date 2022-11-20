@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-('Comedy', 'Education', 'Government')
-=======
-('Arts', 'Business', 'Comedy')
->>>>>>> 68fa867af7779b8eb0b5e15b890fc8ea8e1f670f
+('Comedy', 'Business', 'Education')
