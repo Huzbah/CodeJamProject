@@ -11,8 +11,6 @@ import pygame
 import random
 from tkinter import *
 import os 
-from itertools import cycle
-from search_term_select import *
 
 CURR = 0
 
@@ -99,19 +97,20 @@ def player(playlist):
     def nextEpisode(playlist):
         mixer.music.stop()
         mixer.music.unload()
-        mixer.music.load('./03_output/podcasts/loadboardMessage1.mp3')
+        global CURR
+        i = CURR%3 +1
+        mixer.music.load('./03_output/podcasts/loadboardMessage'+str(i)+'.mp3')
         mixer.music.play()
         while mixer.music.get_busy():
             pass
     
         mixer.music.stop()
         mixer.music.unload()
-
-        global CURR
+    
         CURR =  CURR + 1
         playEpisode(playlist)
 
-    
+
     playbtn = Button(root, text="Play", command = lambda: playEpisode(playlist))
     playbtn.grid(row=1, column=0)
 
@@ -132,7 +131,6 @@ def player(playlist):
 
 
 def main():
-
     # currently opening a test file
     selectedOptions = getJson('./01_data/queue.json')
     
@@ -153,7 +151,5 @@ def main():
 
     player(playlist)
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
