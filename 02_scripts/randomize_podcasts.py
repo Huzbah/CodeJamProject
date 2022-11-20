@@ -22,7 +22,7 @@ def getJson(fileName):
     return data
 
 def getApiKey():
-    f = open('./01_data/private/key.txt', 'r')
+    f = open('../01_data/private/key.txt', 'r')
     return f.readline()
 
 def getRecommendations(episode_id):
@@ -80,12 +80,12 @@ def player(playlist):
     def playEpisode(playlist): 
         audioLink = getEpisodeLink(playlist, CURR)
         x = get(audioLink).content
-        file = open('./03_output/podcasts/podcast.mp3','wb')
+        file = open('../03_output/podcasts/podcast.mp3','wb')
         file.write(x)
         file.close()
-        mixer.music.load('./03_output/podcasts/podcast.mp3')
+        mixer.music.load('../03_output/podcasts/podcast.mp3')
         mixer.music.play()
-
+        
     def pauseEpisode():
         mixer.music.pause()
 
@@ -99,7 +99,7 @@ def player(playlist):
     def nextEpisode(playlist):
         mixer.music.stop()
         mixer.music.unload()
-        mixer.music.load('./03_output/podcasts/loadboardMessage1.mp3')
+        mixer.music.load('../03_output/podcasts/loadboardMessage1.mp3')
         mixer.music.play()
         while mixer.music.get_busy():
             pass
@@ -134,7 +134,7 @@ def player(playlist):
 def main():
 
     # currently opening a test file
-    selectedOptions = getJson('./01_data/queue.json')
+    selectedOptions = getJson('../01_data/queue.json')
     
     recommendations = []
     #recommendations = getJson('./01_data/recommendations.json')

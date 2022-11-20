@@ -1,1 +1,1 @@
-('Comedy', 'Kids & Family', 'Health & Fitness')
+('Comedy', 'Education', 'Government')
