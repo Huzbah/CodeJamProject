@@ -13,6 +13,8 @@ from tkinter import *
 import os 
 from itertools import cycle
 from search_term_select import *
+from retrieve_podcasts import *
+from execute import *
 
 CURR = 0
 
@@ -111,7 +113,7 @@ def player(playlist):
         CURR =  CURR + 1
         playEpisode(playlist)
 
-    
+
     playbtn = Button(root, text="Play", command = lambda: playEpisode(playlist))
     playbtn.grid(row=1, column=0)
 
@@ -132,28 +134,22 @@ def player(playlist):
 
 
 def main():
-
     # currently opening a test file
     selectedOptions = getJson('../01_data/queue.json')
     
-    recommendations = []
-    #recommendations = getJson('./01_data/recommendations.json')
+    #recommendations = []
+    recommendations = getJson('./01_data/recommendations.json')
     playlist=[]
 
     for key in selectedOptions:
         playlist.append(selectedOptions[key])
 
-    for key in selectedOptions:
-       for recommendedEpisode in getRecommendations(selectedOptions[key]["id"]).json()["recommendations"]:
-            recommendations.append(recommendedEpisode)
+    #for key in selectedOptions:
+    #   for recommendedEpisode in getRecommendations(selectedOptions[key]["id"]).json()["recommendations"]:
+    #        recommendations.append(recommendedEpisode)
     
     random.shuffle(recommendations)
     playlist=playlist+recommendations
     playlist=removeDuplicates(playlist)
 
     player(playlist)
-
-
-
-if __name__ == '__main__':
-    main()
